@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.yushilei.qiushibaike3.fragments.QiushiFragment">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/qiushi_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorColor="#10d0e6"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="#131b8b"
+        app:tabTextColor="#504141" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/qiushi_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
