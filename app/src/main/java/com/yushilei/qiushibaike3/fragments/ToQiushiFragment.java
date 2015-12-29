@@ -106,7 +106,7 @@ public class ToQiushiFragment extends Fragment implements Callback<ZhuangxiangRe
     @Override
     public void onResponse(Response<ZhuangxiangResponse> response, Retrofit retrofit) {
         adapter.addAll(response.body().getItems());
-        refreshListView.setHeaderToNormal();
+        refreshListView.setHeaderToNormal(true);
     }
 
     @Override

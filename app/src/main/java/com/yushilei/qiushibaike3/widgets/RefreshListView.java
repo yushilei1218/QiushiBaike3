@@ -1,6 +1,7 @@
 package com.yushilei.qiushibaike3.widgets;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,11 +19,15 @@ import android.widget.TextView;
 import com.yushilei.qiushibaike3.R;
 import com.yushilei.qiushibaike3.interfaces.NeedRefreshCallBack;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 /**
  * Created by yushilei on 2015/12/27.
  */
 public class RefreshListView extends LinearLayout implements View.OnTouchListener {
+    private String refreshData;
     private ListView listView;
     private RelativeLayout header;
 
@@ -50,6 +55,8 @@ public class RefreshListView extends LinearLayout implements View.OnTouchListene
     private static final float ARROW_CHANGE_SIZE = 240;
 
     private RotateAnimation rotateAnimation;
+    private String data;
+    private SimpleDateFormat dateFormat;
 
     public RefreshListView(Context context) {
         this(context, null);
@@ -74,6 +81,7 @@ public class RefreshListView extends LinearLayout implements View.OnTouchListene
         loadingIcon = (ImageView) header.findViewById(R.id.header_loading);
         headerTitle = (TextView) header.findViewById(R.id.header_title);
         headerDate = (TextView) header.findViewById(R.id.header_date);
+        dateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
         //添加header到 该自定义View中
         addView(header, 0);
     }
@@ -142,12 +150,12 @@ public class RefreshListView extends LinearLayout implements View.OnTouchListene
                         startLoading();
                         callBack.needRefreshCallBack();
                     } else {
-                        setHeaderToNormal();
+                        setHeaderToNormal(false);
                     }
                 } else if (isRefreshIng) {
                     //如果现在正在刷新. header的样式将不发生变化  donothing
                 } else {
-                    setHeaderToNormal();
+                    setHeaderToNormal(false);
                 }
                 break;
         }
@@ -167,7 +175,7 @@ public class RefreshListView extends LinearLayout implements View.OnTouchListene
         int top = listView.getTop();
         float y = listView.getY();
         float translationY = listView.getTranslationY();
-        Log.d("RefreshListView", " :top=" + top+" getY="+y+" tY="+translationY +" 子View top="+top1);
+        Log.d("RefreshListView", " :top=" + top + " getY=" + y + " tY=" + translationY + " 子View top=" + top1);
 
 
         if (position == 0 && top1 == 0) {
@@ -213,7 +221,7 @@ public class RefreshListView extends LinearLayout implements View.OnTouchListene
         Log.d("RefreshListView", "loadingIcon.setVisibility 隐藏");
 
         headerTitle.setText("下拉刷新");
-        headerDate.setText("2015年12月27号 下午15:23:23");
+        // headerDate.setText("2015年12月27号 下午15:23:23");
         mP.topMargin = (int) (-header.getHeight() + distance / 2);
         header.setLayoutParams(mP);
     }
@@ -228,7 +236,7 @@ public class RefreshListView extends LinearLayout implements View.OnTouchListene
         arrowDown.setVisibility(INVISIBLE);
         loadingIcon.setVisibility(INVISIBLE);
         headerTitle.setText("松开刷新");
-        headerDate.setText("2015年12月27号 下午15:23:23");
+        //headerDate.setText("2015年12月27号 下午15:23:23");
         mP.topMargin = (int) (-header.getHeight() + distance / 2);
         header.setLayoutParams(mP);
     }
@@ -236,7 +244,7 @@ public class RefreshListView extends LinearLayout implements View.OnTouchListene
     /**
      * 把header的状态设置到 初始状态  供内部 和外部调用
      */
-    public void setHeaderToNormal() {
+    public void setHeaderToNormal(boolean isRefreshed) {
         //每次清除loadingView上的动画 以便可以正常隐藏
         loadingIcon.clearAnimation();
         //设置状态参数 初始化
@@ -250,7 +258,13 @@ public class RefreshListView extends LinearLayout implements View.OnTouchListene
         loadingIcon.setVisibility(INVISIBLE);
 
         headerTitle.setText("下拉刷新");
-        headerDate.setText("2015年12月27号 下午15:23:23");
+        if (isRefreshed) {
+            long timeMillis = System.currentTimeMillis();
+            data = dateFormat.format(new Date(timeMillis));
+            headerDate.setText(data);
+        } else {
+            headerDate.setText("啦啦啦.....");
+        }
     }
 
     private NeedRefreshCallBack callBack;
