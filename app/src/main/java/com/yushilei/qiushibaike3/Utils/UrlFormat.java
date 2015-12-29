@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 /**
  * Created by yushilei on 2015/12/29.
  */
-public class UrlFormat {
+public  class UrlFormat {
     private static String imageType = "small";
 
     public static String getImageType() {

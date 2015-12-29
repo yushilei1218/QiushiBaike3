@@ -1,8 +1,10 @@
 package com.yushilei.qiushibaike3;
 
 
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -23,6 +25,7 @@ import com.yushilei.qiushibaike3.fragments.DiscoverFragment;
 import com.yushilei.qiushibaike3.fragments.QiushiFragment;
 import com.yushilei.qiushibaike3.fragments.QiuyouquanFragment;
 import com.yushilei.qiushibaike3.fragments.SmallPagerFragment;
+import com.yushilei.qiushibaike3.receivers.NetStateReceiver;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private NavigationView navigationView;
@@ -35,10 +38,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DiscoverFragment discoverFragment;
     private SmallPagerFragment smallPagerFragment;
 
+    private NetStateReceiver netStateReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //初始化网络监测receiver
+        netStateReceiver = new NetStateReceiver();
 
         drawer = (DrawerLayout) findViewById(R.id.main_drawer);
         navigationView = (NavigationView) findViewById(R.id.main_navigation_view);
@@ -56,7 +63,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onResume() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(netStateReceiver, filter);
         super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        unregisterReceiver(netStateReceiver);
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        netStateReceiver = null;
+        super.onDestroy();
     }
 
     private void initShowFragment() {
@@ -129,4 +150,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

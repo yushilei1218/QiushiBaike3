@@ -75,6 +75,8 @@ public class ToQiushiItemAdapter extends BaseAdapter {
             holder.userIcon.setImageResource(R.mipmap.unlogin_icon);
         }
         if (entity.getImage() != null) {
+            Log.d("ToQiushiItemAdapter", "ImageUrl" + UrlFormat.getImageUrl(entity.getImage()));
+
             Picasso.with(context).load(UrlFormat.getImageUrl(entity.getImage()))
                     .resize(parent.getWidth(), 0)
                     .placeholder(R.mipmap.placeholder_image)
