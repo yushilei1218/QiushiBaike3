@@ -1,6 +1,8 @@
 package com.yushilei.qiushibaike3;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -13,8 +15,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.yushilei.qiushibaike3.Utils.CircleTranform;
 import com.yushilei.qiushibaike3.fragments.DiscoverFragment;
 import com.yushilei.qiushibaike3.fragments.QiushiFragment;
 import com.yushilei.qiushibaike3.fragments.QiuyouquanFragment;
@@ -39,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer = (DrawerLayout) findViewById(R.id.main_drawer);
         navigationView = (NavigationView) findViewById(R.id.main_navigation_view);
         mainContainer = (FrameLayout) findViewById(R.id.main_container);
-
+        //初始化头像
         navigationView.setNavigationItemSelectedListener(this);
 
         toggle = new ActionBarDrawerToggle(this, drawer, 0, 0);
@@ -48,6 +52,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.setDrawerListener(toggle);
         //向FrameLayout内部添加Fragment
         initShowFragment();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void initShowFragment() {

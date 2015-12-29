@@ -49,14 +49,10 @@ public class QiushiFragment extends Fragment {
     }
 
     private void initList() {
-        list.add("专享");
-        list.add("视频");
-        list.add("纯文");
-        list.add("纯图");
-        list.add("精华");
-        list.add("百科");
-        list.add("糗事");
-        list.add("隔壁");
-        list.add("话题");
+        list.add("纯图"); //suggest
+        list.add("视频");//video
+        list.add("纯文");// text
+        list.add("专享");//image
+        list.add("精华");//latest
     }
 }

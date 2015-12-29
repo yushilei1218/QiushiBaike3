@@ -1,14 +1,28 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:orientation="vertical"
     tools:context="com.yushilei.qiushibaike3.fragments.ToQiushiFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/toqiushi_text"
+    <com.yushilei.qiushibaike3.widgets.RefreshListView
+        android:id="@+id/toqiushi_refresh_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
 
-</FrameLayout>
+        <ListView
+            android:id="@+id/toqiushi_list_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.yushilei.qiushibaike3.widgets.RefreshListView>
+
+    <ListView
+        android:id="@+id/toqiushi_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+</LinearLayout>
