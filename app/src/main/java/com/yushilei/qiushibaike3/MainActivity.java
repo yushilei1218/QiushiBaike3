@@ -1,6 +1,7 @@
 package com.yushilei.qiushibaike3;
 
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.yushilei.qiushibaike3.Utils.CircleTranform;
 import com.yushilei.qiushibaike3.fragments.DiscoverFragment;
 import com.yushilei.qiushibaike3.fragments.QiushiFragment;
@@ -44,13 +47,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //初始化网络监测receiver
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.setTitle("糗事百科");
+        }
+        //初始化网络监测receiver  使用动态注册
         netStateReceiver = new NetStateReceiver();
 
         drawer = (DrawerLayout) findViewById(R.id.main_drawer);
         navigationView = (NavigationView) findViewById(R.id.main_navigation_view);
         mainContainer = (FrameLayout) findViewById(R.id.main_container);
-        //初始化头像
+
         navigationView.setNavigationItemSelectedListener(this);
 
         toggle = new ActionBarDrawerToggle(this, drawer, 0, 0);
@@ -112,11 +119,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        Log.d("MainActivity", "onNavigationItemSelected");
+
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.action_qiushi:
-                Toast.makeText(this, "qiushi", Toast.LENGTH_SHORT).show();
                 transaction.show(qiushiFragment);
                 transaction.hide(qiuyouquanFragment);
                 transaction.hide(discoverFragment);

@@ -6,6 +6,26 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowAnimationStyle">@style/windowAnimation</item>
+    </style>
+    <!--自定义主题-->
+    <style name="CustomAppTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorCustomTheme</item>
+        <item name="colorPrimaryDark">@color/colorCustomTheme</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="windowAnimation">
+        <item name="android:activityOpenEnterAnimation">@anim/open_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/open_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/close_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/close_out</item>
+    </style>
+
+    <style name="ToqiushiItemComment">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
     </style>
 
 </resources>

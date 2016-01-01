@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -56,23 +57,70 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <FrameLayout
+        android:id="@+id/user_video_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/user_video_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/video_indicator" />
+    </FrameLayout>
+
     <ImageView
         android:id="@+id/user_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <!-- 评论部分-->
     <TextView
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="15dp"
         android:id="@+id/user_comment_part"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
         android:text="好笑 1. 评论 13. 分享 3"
         android:textSize="12sp" />
+    <!--评论部分 点赞 踩  评论部分-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+
+        <ImageView
+            android:id="@+id/toqiushi_support_icon"
+            style="@style/ToqiushiItemComment"
+            android:background="@drawable/touqiushi_support_icon_shape" />
+
+        <ImageView
+            android:id="@+id/toqiushi_unsupport_icon"
+            style="@style/ToqiushiItemComment"
+            android:layout_toRightOf="@id/toqiushi_support_icon"
+            android:background="@drawable/toqiushi_unsupport_icon_shape" />
+
+        <ImageView
+            android:id="@+id/toqiushi_comments_icon"
+            style="@style/ToqiushiItemComment"
+            android:layout_toRightOf="@id/toqiushi_unsupport_icon"
+            android:src="@mipmap/operation_comments_night" />
+
+        <ImageView
+            style="@style/ToqiushiItemComment"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/operation_more_night" />
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="3dp"
+        android:layout_marginTop="5dp"
         android:background="#d7cfcf" />
 
 

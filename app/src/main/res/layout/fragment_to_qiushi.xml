@@ -20,9 +20,4 @@
             android:layout_height="wrap_content" />
     </com.yushilei.qiushibaike3.widgets.RefreshListView>
 
-    <ListView
-        android:id="@+id/toqiushi_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp" />
-
 </LinearLayout>

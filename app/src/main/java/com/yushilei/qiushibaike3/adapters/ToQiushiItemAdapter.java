@@ -2,18 +2,22 @@ package com.yushilei.qiushibaike3.adapters;
 
 import android.content.Context;
 import android.media.Image;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.picasso.Picasso;
 import com.yushilei.qiushibaike3.R;
 import com.yushilei.qiushibaike3.Utils.CircleTranform;
 import com.yushilei.qiushibaike3.Utils.UrlFormat;
+import com.yushilei.qiushibaike3.entitys.SuggestResponse;
 import com.yushilei.qiushibaike3.entitys.ZhuangxiangResponse;
 
 import java.util.Collection;
@@ -23,10 +27,11 @@ import java.util.List;
  * Created by yushilei on 2015/12/29.
  */
 public class ToQiushiItemAdapter extends BaseAdapter {
+    private View.OnClickListener onClicklistener;
     private Context context;
-    private List<ZhuangxiangResponse.ItemsEntity> list;
+    private List<SuggestResponse.ItemsEntity> list;
 
-    public ToQiushiItemAdapter(Context context, List<ZhuangxiangResponse.ItemsEntity> list) {
+    public ToQiushiItemAdapter(Context context, List<SuggestResponse.ItemsEntity> list) {
         this.context = context;
         this.list = list;
     }
@@ -37,6 +42,8 @@ public class ToQiushiItemAdapter extends BaseAdapter {
         if (list != null) {
             ret = list.size();
         }
+        Log.d("ToQiushiItemAdapter", "getCount" + ret);
+
         return ret;
     }
 
@@ -58,7 +65,7 @@ public class ToQiushiItemAdapter extends BaseAdapter {
         }
         ViewHolder holder = (ViewHolder) convertView.getTag();
 
-        ZhuangxiangResponse.ItemsEntity entity = list.get(position);
+        SuggestResponse.ItemsEntity entity = list.get(position);
 
         holder.content.setText(entity.getContent());
 
@@ -72,11 +79,19 @@ public class ToQiushiItemAdapter extends BaseAdapter {
                     .into(holder.userIcon);
         } else {
             holder.userName.setText("匿名用户");
-            holder.userIcon.setImageResource(R.mipmap.unlogin_icon);
+            holder.userIcon.setImageResource(R.mipmap.ic_launcher);
         }
-        if (entity.getImage() != null) {
-            Log.d("ToQiushiItemAdapter", "ImageUrl" + UrlFormat.getImageUrl(entity.getImage()));
-
+        //视频图片 or content图片处理
+        String format = entity.getFormat();
+        if (format.equals("video")) {
+            holder.videoConatainer.setVisibility(View.VISIBLE);
+            Picasso.with(context).load(entity.getPic_url())
+                    .resize(parent.getWidth(),0)
+                    .placeholder(R.mipmap.placeholder_image)
+                    .error(R.mipmap.error_image)
+                    .into(holder.videoImage);
+        } else if (entity.getImage() != null) {
+            holder.videoConatainer.setVisibility(View.GONE);
             Picasso.with(context).load(UrlFormat.getImageUrl(entity.getImage()))
                     .resize(parent.getWidth(), 0)
                     .placeholder(R.mipmap.placeholder_image)
@@ -84,7 +99,9 @@ public class ToQiushiItemAdapter extends BaseAdapter {
                     .into(holder.itemImage);
         } else {
             holder.itemImage.setVisibility(View.GONE);
+            holder.videoConatainer.setVisibility(View.GONE);
         }
+
         //设置 hotLevel
         if (entity.getType() != null) {
             String type = entity.getType();
@@ -116,33 +133,77 @@ public class ToQiushiItemAdapter extends BaseAdapter {
             sb.append("分享 " + entity.getShare_count());
         }
         holder.userComment.setText(sb.toString());
+        //处理评论 部分
+        holder.imageComments.setTag(position);
+        //处理 赞 un赞 部分
+        boolean isSupport = entity.isSupport();
+        boolean isUnSupport = entity.isUnSupport();
+        if (isSupport) {
+            holder.imageSupport.setSelected(true);
+        } else {
+            holder.imageSupport.setSelected(false);
+        }
+        if (isUnSupport) {
+            holder.imageUnSupport.setSelected(true);
+        } else {
+            holder.imageUnSupport.setSelected(false);
+        }
+        holder.imageUnSupport.setTag(position);
+        holder.imageSupport.setTag(position);
+
         return convertView;
     }
 
-    public void addAll(Collection<? extends ZhuangxiangResponse.ItemsEntity> collection) {
-        list.addAll(0, collection);
+    public void addAll(Collection<? extends SuggestResponse.ItemsEntity> collection) {
+        list.addAll(collection);
         notifyDataSetChanged();
     }
 
-    private static class ViewHolder {
+    public void clearAll() {
+        list.clear();
+        notifyDataSetChanged();
+    }
+
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        this.onClicklistener = onClickListener;
+    }
+
+    private class ViewHolder {
         public TextView content;
         public TextView userName;
         public ImageView userIcon;
         public ImageView itemImage;
-
+        //-------------
         public ImageView hotLevelIcon;
         public TextView hotLevelDesc;
         public TextView userComment;
+        //------------评论点击部分
+        public ImageView imageComments;
+        public ImageView imageSupport;
+        public ImageView imageUnSupport;
+        //---
+        public ImageView videoImage;
+        public FrameLayout videoConatainer;
 
         public ViewHolder(View view) {
             content = (TextView) view.findViewById(R.id.user_content);
             userName = (TextView) view.findViewById(R.id.user_name);
             userIcon = (ImageView) view.findViewById(R.id.user_icon);
             itemImage = (ImageView) view.findViewById(R.id.user_image);
+            videoImage = (ImageView) view.findViewById(R.id.user_video_image);
+            videoConatainer = (FrameLayout) view.findViewById(R.id.user_video_container);
 
             hotLevelIcon = (ImageView) view.findViewById(R.id.user_hot_icon);
             hotLevelDesc = (TextView) view.findViewById(R.id.user_hot_level);
             userComment = (TextView) view.findViewById(R.id.user_comment_part);
+
+            imageComments = (ImageView) view.findViewById(R.id.toqiushi_comments_icon);
+            imageSupport = (ImageView) view.findViewById(R.id.toqiushi_support_icon);
+            imageUnSupport = (ImageView) view.findViewById(R.id.toqiushi_unsupport_icon);
+
+            imageSupport.setOnClickListener(onClicklistener);
+            imageUnSupport.setOnClickListener(onClicklistener);
+            imageComments.setOnClickListener(onClicklistener);
         }
     }
 }

@@ -45,7 +45,7 @@ public class NetStateReceiver extends BroadcastReceiver {
                         break;
                     case ConnectivityManager.TYPE_MOBILE:
                         if (state == NetworkInfo.State.CONNECTED) {
-                            UrlFormat.setImageType("small");
+                            UrlFormat.setImageType("medium");
                             netWorkState = "使用2G/3G/4G网络";
                         }
                         break;
@@ -65,7 +65,7 @@ public class NetStateReceiver extends BroadcastReceiver {
         //1.准备notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         //2.设置内容
-        builder.setSmallIcon(R.mipmap.ic_launcher).setContentTitle(title).setContentText(content);
+        builder.setSmallIcon(R.mipmap.notification).setContentTitle(title).setContentText(content);
         Notification n = builder.build();
         //3.发送通知
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);

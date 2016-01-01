@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.yushilei.qiushibaike3">
+    package="com.yushilei.qiushibaike3" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/CustomAppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,11 +25,23 @@
         <receiver
             android:name=".receivers.NetStateReceiver"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".CommentsActivity"
+            android:theme="@style/CustomAppTheme" />
+
+        <provider
+            android:name=".providers.ItemDataProvider"
+            android:authorities="item;com.yushilei.qiushibaike3.providers.ItemDataProvider"
+            android:exported="true" />
+
+        <activity android:name=".LoaderActivity" >
+        </activity>
     </application>
 
 </manifest>

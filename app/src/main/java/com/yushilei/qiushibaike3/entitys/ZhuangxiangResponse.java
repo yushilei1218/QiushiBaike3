@@ -1,5 +1,6 @@
 package com.yushilei.qiushibaike3.entitys;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -89,7 +90,26 @@ public class ZhuangxiangResponse {
         return items;
     }
 
-    public static class ItemsEntity {
+    public static class ItemsEntity implements Serializable {
+        private boolean isSupport;
+        private boolean isUnSupport;
+
+        public boolean isSupport() {
+            return isSupport;
+        }
+
+        public void setIsSupport(boolean isSupport) {
+            this.isSupport = isSupport;
+        }
+
+        public boolean isUnSupport() {
+            return isUnSupport;
+        }
+
+        public void setIsUnSupport(boolean isUnSupport) {
+            this.isUnSupport = isUnSupport;
+        }
+
         private String format;
         private String image;
         private int published_at;
@@ -244,7 +264,7 @@ public class ZhuangxiangResponse {
             return type;
         }
 
-        public static class UserEntity {
+        public static class UserEntity  implements Serializable  {
             private int avatar_updated_at;
             private int last_visited_at;
             private int created_at;
@@ -337,7 +357,7 @@ public class ZhuangxiangResponse {
             }
         }
 
-        public static class ImageSizeEntity {
+        public static class ImageSizeEntity  implements Serializable  {
             private List<Integer> s;
             private List<Integer> m;
 
@@ -358,7 +378,7 @@ public class ZhuangxiangResponse {
             }
         }
 
-        public static class VotesEntity {
+        public static class VotesEntity  implements Serializable  {
             private int down;
             private int up;
 
