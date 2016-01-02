@@ -75,6 +75,9 @@ public class ToQiushiItemAdapter extends BaseAdapter {
             holder.userName.setText(entity.getUser().getLogin());
             Picasso.with(context)
                     .load(UrlFormat.getIconUrl(entity.getUser().getId(), entity.getUser().getIcon()))
+                    .resize(80, 80)
+                    .placeholder(R.mipmap.placeholder_image)
+                    .error(R.mipmap.error_image)
                     .transform(new CircleTranform())
                     .into(holder.userIcon);
         } else {
@@ -86,7 +89,7 @@ public class ToQiushiItemAdapter extends BaseAdapter {
         if (format.equals("video")) {
             holder.videoConatainer.setVisibility(View.VISIBLE);
             Picasso.with(context).load(entity.getPic_url())
-                    .resize(parent.getWidth(),0)
+                    .resize(parent.getWidth(), 0)
                     .placeholder(R.mipmap.placeholder_image)
                     .error(R.mipmap.error_image)
                     .into(holder.videoImage);

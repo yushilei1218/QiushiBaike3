@@ -133,18 +133,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 transaction.show(qiuyouquanFragment);
                 transaction.hide(discoverFragment);
                 transaction.hide(smallPagerFragment);
+                Toast.makeText(this, "傻了了吧,这页我还没做呢", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_discover:
                 transaction.hide(qiushiFragment);
                 transaction.hide(qiuyouquanFragment);
                 transaction.show(discoverFragment);
                 transaction.hide(smallPagerFragment);
+                Toast.makeText(this, "上页都没做这能做吗?!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_small_pager:
                 transaction.hide(qiushiFragment);
                 transaction.hide(qiuyouquanFragment);
                 transaction.hide(discoverFragment);
                 transaction.show(smallPagerFragment);
+                Toast.makeText(this, "我要是你就不会再继续点击这页了", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_my:
                 break;

@@ -24,11 +24,13 @@ public class DBAsyncLoadTask extends AsyncTask<String, Void, List<SuggestRespons
 
     @Override
     protected List<SuggestResponse.ItemsEntity> doInBackground(String... params) {
-        //数据库中读取数据
         List<SuggestResponse.ItemsEntity> ret = null;
-        List<SuggestResponse.ItemsEntity> itemsEntities = DBUtils.queryAll(context);
-        if (itemsEntities != null && itemsEntities.size() > 0) {
-            ret = itemsEntities;
+        if (params != null) {
+            //数据库中读取数据
+            List<SuggestResponse.ItemsEntity> itemsEntities = DBUtils.queryByItemType(context, params[0]);
+            if (itemsEntities != null && itemsEntities.size() > 0) {
+                ret = itemsEntities;
+            }
         }
         return ret;
     }

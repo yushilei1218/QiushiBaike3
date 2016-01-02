@@ -24,6 +24,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String pic_url = "pic_url";
     public static final String share_count = "share_count";
     public static final String type = "type";
+    //新增字段用来区分 不同类型加载的类别
+    public static final String item_type = "item_type";
 
     public static final String u_id = "_id";
     public static final String login = "login";
@@ -38,6 +40,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //创建3张表
     private static final String CREATE_TABLE_ITEMS = "create table " + ITEMS + " (" +
             "item_id integer primary key," +
+            "item_type text," +
             "format text," +
             "image text," +
             "content text," +

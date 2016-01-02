@@ -90,8 +90,9 @@ public class CommentsItemAdapter extends BaseAdapter {
         Picasso.with(context).load(
                 UrlFormat.getIconUrl(itemsEntity.getUser().getId(), itemsEntity.getUser().getIcon()))
                 .transform(new CircleTranform())
-                .placeholder(R.mipmap.default_image)
-                .error(R.mipmap.default_image)
+                .resize(80, 80)
+                .placeholder(R.mipmap.placeholder_image)
+                .error(R.mipmap.error_image)
                 .into(holder.commentsUserIcon);
         return convertView;
     }

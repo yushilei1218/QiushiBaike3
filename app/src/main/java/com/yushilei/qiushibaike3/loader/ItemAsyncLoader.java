@@ -58,7 +58,7 @@ public class ItemAsyncLoader extends AsyncTaskLoader<List<SuggestResponse.ItemsE
         if (response != null) {
             List<SuggestResponse.ItemsEntity> items = response.body().getItems();
             //插入数据库
-            DBUtils.itemsListInsert(getContext(), items);
+            DBUtils.itemsListInsert(getContext(), items, type);
         }
     }
 

@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context="com.yushilei.qiushibaike3.fragments.ToQiushiFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <com.yushilei.qiushibaike3.widgets.RefreshListView
         android:id="@+id/toqiushi_refresh_view"
         android:layout_width="match_parent"

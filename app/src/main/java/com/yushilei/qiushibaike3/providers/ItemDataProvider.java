@@ -92,7 +92,21 @@ public class ItemDataProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        int code = uriMatcher.match(uri);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int delete = -1;
+        switch (code) {
+            case CODE_ITEMS:
+                delete = db.delete(ITEMS, selection, selectionArgs);
+                break;
+            case CODE_USER:
+                delete = db.delete(USER, selection, selectionArgs);
+                break;
+            case CODE_VOTES:
+                delete = db.delete(VOTES, selection, selectionArgs);
+                break;
+        }
+        return delete;
     }
 
     @Override
