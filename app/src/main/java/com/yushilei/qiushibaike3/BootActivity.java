@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ public class BootActivity extends AppCompatActivity implements ViewPager.OnPageC
     private static final String APP_CONFIG = "app-config";
     private ImageView bootImage;
     private ImageView bootTitle;
+    private LinearLayout indicatorContainer;
 
     private ViewPager pager;
     private TextView bootTime;
@@ -68,6 +70,7 @@ public class BootActivity extends AppCompatActivity implements ViewPager.OnPageC
         bootTitle = (ImageView) findViewById(R.id.boot_title);
         pager = (ViewPager) findViewById(R.id.boot_view_pager);
         bootTime = (TextView) findViewById(R.id.boot_time);
+        indicatorContainer = (LinearLayout) findViewById(R.id.boot_indicator_container);
 
 
         SharedPreferences preferences = getSharedPreferences(APP_CONFIG, MODE_PRIVATE);
@@ -83,7 +86,6 @@ public class BootActivity extends AppCompatActivity implements ViewPager.OnPageC
             isFirstBoot = false;
             pager.setVisibility(View.GONE);
             bootTime.setVisibility(View.GONE);
-
             bootImage.setImageResource(R.mipmap.q01_new);
 
         }
@@ -103,6 +105,19 @@ public class BootActivity extends AppCompatActivity implements ViewPager.OnPageC
             initList(list);
             pager.setAdapter(new ImagePageAdapter(this, list));
             pager.addOnPageChangeListener(this);
+
+            for (int i = 0; i < list.size(); i++) {
+                ImageView view = new ImageView(this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                lp.rightMargin = 10;
+                view.setLayoutParams(lp);
+                view.setImageResource(R.mipmap.page_indicator_unfocused);
+                indicatorContainer.addView(view);
+            }
+            //初始化设置第一个view 为选中状态
+            ImageView v = (ImageView) indicatorContainer.getChildAt(0);
+            v.setImageResource(R.mipmap.page_indicator_focused);
 
         } else {
             //非第一次启动
@@ -140,6 +155,15 @@ public class BootActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     @Override
     public void onPageSelected(int position) {
+        int count = indicatorContainer.getChildCount();
+        for (int i = 0; i < count; i++) {
+            ImageView view = (ImageView) indicatorContainer.getChildAt(i);
+            if (i == position) {
+                view.setImageResource(R.mipmap.page_indicator_focused);
+            } else {
+                view.setImageResource(R.mipmap.page_indicator_unfocused);
+            }
+        }
 
         if (position == pager.getChildCount() && !isFirstScrollToEnd) {
             isFirstScrollToEnd = true;

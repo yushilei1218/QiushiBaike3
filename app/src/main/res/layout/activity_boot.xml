@@ -24,6 +24,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <LinearLayout
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="50dp"
+        android:id="@+id/boot_indicator_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
+
     <TextView
         android:id="@+id/boot_time"
         android:layout_width="wrap_content"
@@ -32,6 +40,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/boot_count_down_shape"
-        android:text="5秒后跳转" />
+        android:text="5秒后跳转"
+        android:textColor="#F00"/>
 
 </FrameLayout>

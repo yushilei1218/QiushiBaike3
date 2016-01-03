@@ -50,6 +50,7 @@ public class ToQiushiFragment extends Fragment implements Callback<SuggestRespon
     private boolean isBottomRefreshing;
     private boolean isTopRefreshing;
     private boolean loadOnce;
+    private Call<SuggestResponse> call;
 
     public ToQiushiFragment() {
         // Required empty public constructor
@@ -113,8 +114,8 @@ public class ToQiushiFragment extends Fragment implements Callback<SuggestRespon
                     Log.d("ToQiushiFragment", "从数据库加载");
                 } else {
                     //初始化调用
-                    Call<SuggestResponse> article = HttpUtils.getService().getArticle(itemType, ++pageNo, 20);
-                    article.enqueue(this);
+                    call = HttpUtils.getService().getArticle(itemType, ++pageNo, 20);
+                    call.enqueue(this);
                     Log.d("ToQiushiFragment", "从网络加载");
                 }
             }
@@ -244,8 +245,8 @@ public class ToQiushiFragment extends Fragment implements Callback<SuggestRespon
         int i = totalItemCount - (firstVisibleItem + visibleItemCount);
         if (i <= 0 && !isBottomRefreshing && !isTopRefreshing) {
             isBottomRefreshing = true;
-            Call<SuggestResponse> article = HttpUtils.getService().getArticle(itemType, ++pageNo, 20);
-            article.enqueue(this);
+            call = HttpUtils.getService().getArticle(itemType, ++pageNo, 20);
+            call.enqueue(this);
         }
     }
 
@@ -253,5 +254,11 @@ public class ToQiushiFragment extends Fragment implements Callback<SuggestRespon
     @Override
     public void dbLoadFinishCallBack(List<SuggestResponse.ItemsEntity> entityList) {
         adapter.addAll(entityList);
+    }
+
+    @Override
+    public void onDestroy() {
+        call.cancel();
+        super.onDestroy();
     }
 }
