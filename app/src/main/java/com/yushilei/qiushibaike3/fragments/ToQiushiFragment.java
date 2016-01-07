@@ -37,7 +37,7 @@ import retrofit.Retrofit;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ToQiushiFragment extends Fragment implements Callback<SuggestResponse>, NeedRefreshCallBack, View.OnClickListener, AdapterView.OnItemClickListener, AbsListView.OnScrollListener, DBLoadFinishCallBack {
+public class ToQiushiFragment extends Fragment implements Callback<SuggestResponse>, NeedRefreshCallBack, View.OnClickListener, AdapterView.OnItemClickListener, AbsListView.OnScrollListener, DBLoadFinishCallBack, ToQiushiItemAdapter.MediaCallBack {
     private static final String TEXT = "text";
     private String itemType;
     private int pageNo;
@@ -102,6 +102,8 @@ public class ToQiushiFragment extends Fragment implements Callback<SuggestRespon
                 refreshList.setOnItemClickListener(this);
                 //listView 滑动到最后加载更多处理
                 refreshList.setOnScrollListener(this);
+
+                adapter.setCallBack(this);
 
                 View inflate = LayoutInflater.from(getContext()).inflate(R.layout.list_view_footer, null, false);
                 refreshList.addFooterView(inflate, null, false);
@@ -242,6 +244,12 @@ public class ToQiushiFragment extends Fragment implements Callback<SuggestRespon
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        if (playPosition != -1) {
+            if (firstVisibleItem > playPosition || playPosition > (firstVisibleItem + visibleItemCount - 1)) {
+                playPosition = -1;
+                adapter.resetMediaPlayer();
+            }
+        }
         int i = totalItemCount - (firstVisibleItem + visibleItemCount);
         if (i <= 0 && !isBottomRefreshing && !isTopRefreshing) {
             isBottomRefreshing = true;
@@ -260,5 +268,23 @@ public class ToQiushiFragment extends Fragment implements Callback<SuggestRespon
     public void onDestroy() {
         call.cancel();
         super.onDestroy();
+    }
+
+    private int playPosition = -1;
+
+    @Override
+    public void getPlayPosition(int position) {
+        playPosition = position;
+    }
+
+    @Override
+    public void onPause() {
+        adapter.releaseMediaPlayer();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 }

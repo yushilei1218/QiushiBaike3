@@ -1,8 +1,6 @@
 package com.yushilei.qiushibaike3;
 
 import android.content.Intent;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,10 +9,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,21 +19,15 @@ import com.squareup.picasso.Picasso;
 import com.yushilei.qiushibaike3.Utils.CircleTranform;
 import com.yushilei.qiushibaike3.Utils.HttpUtils;
 import com.yushilei.qiushibaike3.Utils.UrlFormat;
-import com.yushilei.qiushibaike3.adapters.CommentCategoryAdapter;
 import com.yushilei.qiushibaike3.adapters.CommentsItemAdapter;
 import com.yushilei.qiushibaike3.entitys.CommentsResponse;
 import com.yushilei.qiushibaike3.entitys.SuggestResponse;
-import com.yushilei.qiushibaike3.entitys.ZhuangxiangResponse;
-import com.yushilei.qiushibaike3.interfaces.ZhuanxiangService;
 import com.yushilei.qiushibaike3.widgets.CommentListView;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit.Call;
 import retrofit.Callback;
-import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 

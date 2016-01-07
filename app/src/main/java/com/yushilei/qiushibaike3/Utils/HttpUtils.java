@@ -2,7 +2,6 @@ package com.yushilei.qiushibaike3.Utils;
 
 import com.yushilei.qiushibaike3.entitys.CommentsResponse;
 import com.yushilei.qiushibaike3.entitys.SuggestResponse;
-import com.yushilei.qiushibaike3.entitys.ZhuangxiangResponse;
 
 import retrofit.Call;
 import retrofit.GsonConverterFactory;

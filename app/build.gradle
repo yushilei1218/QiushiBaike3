@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
-
     defaultConfig {
         applicationId "com.yushilei.qiushibaike3"
         minSdkVersion 11
@@ -11,10 +10,23 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    //  minifyEnabled true 再次打包 就是混淆包了
+    // 如果使用第三方库 可能需要注意一些事情
     buildTypes {
         release {
-            minifyEnabled false
+            //启用混淆
+            minifyEnabled true
+            //混淆的配置文件
+            //proguard-rules.pro 自定义的module
+            //有一些 class 不可以被混淆, 只有工程使用了该class 的字符串形式的名字的时候
+            //proguard-android.txt默认的配置文件 :配置了一些基本的 比如activity不能被混淆 自定义view 等
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+        baidu {
+        }
+        tencent {
         }
     }
 }
@@ -30,4 +42,5 @@ dependencies {
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
     compile 'com.facebook.fresco:fresco:0.8.1'
     compile 'in.srain.cube:ultra-ptr:1.0.11'
+    compile 'com.android.support:cardview-v7:23.1.0'
 }

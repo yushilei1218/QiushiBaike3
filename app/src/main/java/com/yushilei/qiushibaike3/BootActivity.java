@@ -26,6 +26,7 @@ public class BootActivity extends AppCompatActivity implements ViewPager.OnPageC
     private static final String APP_CONFIG = "app-config";
     private ImageView bootImage;
     private ImageView bootTitle;
+    private ImageView bootLogo;
     private LinearLayout indicatorContainer;
 
     private ViewPager pager;
@@ -70,6 +71,8 @@ public class BootActivity extends AppCompatActivity implements ViewPager.OnPageC
         bootTitle = (ImageView) findViewById(R.id.boot_title);
         pager = (ViewPager) findViewById(R.id.boot_view_pager);
         bootTime = (TextView) findViewById(R.id.boot_time);
+        bootLogo = (ImageView) findViewById(R.id.boot_logo);
+
         indicatorContainer = (LinearLayout) findViewById(R.id.boot_indicator_container);
 
 
@@ -78,6 +81,7 @@ public class BootActivity extends AppCompatActivity implements ViewPager.OnPageC
         if (count <= 0) {
             // TODO: 2016/1/2 启动viewPager 第一次使用
             isFirstBoot = true;
+            bootLogo.setVisibility(View.GONE);
             bootImage.setVisibility(View.GONE);
             bootTitle.setVisibility(View.GONE);
             bootTime.setVisibility(View.GONE);

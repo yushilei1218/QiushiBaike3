@@ -1,5 +1,7 @@
 package com.yushilei.qiushibaike3.entitys;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -14,10 +16,13 @@ public class CommentsResponse {
      * page : 2
      * err : 0
      */
-
+    @SerializedName("count")
     private int count;
+    @SerializedName("total")
     private int total;
+    @SerializedName("page")
     private int page;
+    @SerializedName("err")
     private int err;
     /**
      * liked : false
@@ -28,7 +33,7 @@ public class CommentsResponse {
      * user : {"last_visited_at":1415073769,"created_at":1415073769,"last_device":"ios_3.3.1","email":"","state":"active","role":"n","login":"融壁老王","id":22357735,"icon":"20150829001850.jpg"}
      * id : 346434080
      */
-
+    @SerializedName("items")
     private List<ItemsEntity> items;
 
     public void setCount(int count) {
@@ -72,11 +77,17 @@ public class CommentsResponse {
     }
 
     public static class ItemsEntity {
+        @SerializedName("liked")
         private boolean liked;
+        @SerializedName("floor")
         private int floor;
+        @SerializedName("created_at")
         private long created_at;
+        @SerializedName("content")
         private String content;
+        @SerializedName("like_count")
         private int like_count;
+
         /**
          * last_visited_at : 1415073769
          * created_at : 1415073769
@@ -88,8 +99,9 @@ public class CommentsResponse {
          * id : 22357735
          * icon : 20150829001850.jpg
          */
-
+        @SerializedName("user")
         private UserEntity user;
+        @SerializedName("id")
         private int id;
 
         public void setLiked(boolean liked) {
@@ -149,14 +161,19 @@ public class CommentsResponse {
         }
 
         public static class UserEntity {
+            @SerializedName("last_visited_at")
             private int last_visited_at;
+            @SerializedName("created_at")
             private int created_at;
             private String last_device;
             private String email;
             private String state;
             private String role;
+            @SerializedName("login")
             private String login;
+            @SerializedName("id")
             private int id;
+            @SerializedName("icon")
             private String icon;
 
             public void setLast_visited_at(int last_visited_at) {
